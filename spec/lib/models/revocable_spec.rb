@@ -35,7 +35,7 @@ describe 'Revocable' do
   end
 
   describe :revoke_previous_refresh_token! do
-    subject { FactoryGirl.build(:access_token, :previous_refresh_token => 'old_refresh_token') }
+    subject { FactoryGirl.build(:access_token, previous_refresh_token: 'old_refresh_token') }
     previous_token = FactoryGirl.build(:access_token)
 
     it 'revokes the previous token if present and sets the attribute :previous_refresh_token to nil' do

@@ -3,7 +3,7 @@ require 'rails/generators/active_record'
 class Doorkeeper::AccessTokenPreviousTokenGenerator < Rails::Generators::Base
   include Rails::Generators::Migration
   source_root File.expand_path('../templates', __FILE__)
-  desc 'Provide support for revoking previous refresh token on new access token first use.'
+  desc 'Allow revoking previous refresh token on access token first use.'
 
   def access_token_previous_token
     if oauth_access_tokens_exists? && !previous_token_column_exists?

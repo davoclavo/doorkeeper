@@ -32,7 +32,9 @@ module Doorkeeper
       attr_reader :refresh_token_parameter
 
       def before_successful_response
-        refresh_token.revoke_in(server.refresh_token_revoked_in) unless refresh_token.revoked_at || server.refresh_token_revoked_on_use
+        unless refresh_token.revoked_at || server.refresh_token_revoked_on_use
+          refresh_token.revoke_in(server.refresh_token_revoked_in)
+        end
         create_access_token
       end
 
@@ -48,7 +50,9 @@ module Doorkeeper
           expires_in:        server.access_token_expires_in,
           use_refresh_token: true
         }
-        create_params[:previous_refresh_token] = refresh_token.refresh_token if server.refresh_token_revoked_on_use
+        if server.refresh_token_revoked_on_use
+          create_params[:previous_refresh_token] = refresh_token.refresh_token
+        end
         @access_token = AccessToken.create! create_params
       end
 

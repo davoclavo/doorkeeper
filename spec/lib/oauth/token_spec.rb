@@ -107,7 +107,7 @@ module Doorkeeper
         context 'revoke old token on first access token use' do
           it 'calls revoke previous refresh token if token was found' do
             Doorkeeper.configuration.stub(:refresh_token_revoked_on_use).and_return(true)
-            token = ->(r) { 'token' }
+            token = ->(_r) { 'token' }
             expect(AccessToken).to receive(:by_token).with('token').and_return(token)
             expect(token).to receive(:revoke_previous_refresh_token!)
             Token.authenticate double, token
